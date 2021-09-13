@@ -1,31 +1,90 @@
-function sum(a, b) {
-  let bigA, bigB;
-
-  try {
-    // Передано два числа
-    bigA = BigInt(a);
-    bigB = BigInt(b);
-    return { answer: bigA + bigB };
-  } catch (err) {
-    // Один или два текстовых значениях
-    if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
-      return { error: "Both number should be similar type" };
-
-    if (isNaN(a) && isNaN(b)) {
-      // Roman, so answer also in Roman
-      a = a.toUpperCase();
-      b = b.toUpperCase();
-      a = romanToArabic(a);
-      b = romanToArabic(b);
-
-      const answer = arabicToRoman(a + b);
-      if (!answer) return { error: "Failed to calculate" };
-
-      return { answer };
+// If one of arguments is not valid, there is no point in proceed to calculations
+function areValid(a, b) {
+  for (const arg of arguments) {
+    // Check if arg is a valid number
+    if (isNaN(arg)) {
+      // We know that arg is not a number, now check if it is a valid romanian number
+      const res = romanToArabic(arg.toUpperCase());
+      if (res.error) {
+        return false;
+      } else {
+        continue;
+      }
+    } else {
+      continue;
     }
+  }
+  return true;
+}
+
+// Check if numbers are roman type
+function areRoman(a, b) {
+  if (isNaN(a) && isNaN(b)) {
+    if (!romanToArabic(a).error && !romanToArabic(b).error) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function areNumeric(a, b) {
+  return !isNaN(a) && !isNaN(b);
+}
+
+// Ensure that any of numbers are float
+function areDouble(a, b) {
+  if (areNumeric(a, b)) {
+    return a.includes(".") || b.includes(".");
   }
 }
 
+// Main sum function
+function sum(a, b) {
+  // Check if inputs are similar type (ROMAN with ROMAN or NUMBER with NUMBER)
+  if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
+    return { error: "Both numbers should be similar type" };
+
+  // Check if inputs are valid
+  if (!areValid(a, b)) return { error: "Invalid input" };
+
+  // Check if inputs are roman numbers
+  if (areRoman(a.toUpperCase(), b.toUpperCase())) {
+    try {
+      // Convert roman numbers to arabic
+      a = romanToArabic(a.toUpperCase());
+      b = romanToArabic(b.toUpperCase());
+
+      // Count answer, and convert in back to roman
+      const answer = arabicToRoman(a + b);
+      if (answer) return { answer: answer };
+    } catch (err) {
+      return err;
+    }
+  }
+
+  // If numbers are numberic
+  if (areNumeric(a, b)) {
+    // First, we check if they are floats
+    if (areDouble(a, b)) {
+      return { answer: parseFloat(a) + parseFloat(b) };
+    } else {
+      // If inputs are not floats, then we create BigInts
+      let bigA, bigB;
+      try {
+        bigA = BigInt(a);
+        bigB = BigInt(b);
+        // Return Big Int
+        return { answer: bigA + bigB };
+      } catch (err) {
+        return { error: "Invalid input" };
+      }
+    }
+  }
+  // In case we didn`t match any circumstances
+  return { error: "Invalid input" };
+}
+
+// Convert roman number to arabic
 function romanToArabic(roman) {
   if (roman == null || !isNaN(roman))
     return { error: `Invalid input (roman (${roman}) is null or a number)` };
@@ -37,16 +96,15 @@ function romanToArabic(roman) {
   if (
     /[IVXL][M]|[IVX][D]|[IV][C]|[I][L]/.test(roman) ||
     /IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman)
-  )
-    return {
-      error: `Input value was not a roman number`,
-    };
+  ) {
+    return { error: "Invalid input" };
+  }
 
   try {
     for (var i = 0; i < roman.length; i++) {
       var current = char_to_int(roman.charAt(i));
       if (current === -1) {
-        throw { error: "Invalid romanian number" };
+        throw { error: "Invalid input" };
       }
       if (current > prev) {
         totalValue -= 2 * value;
@@ -108,6 +166,10 @@ function arabicToRoman(arabic) {
     var q = Math.floor(arabic / roman[i]);
     arabic -= q * roman[i];
     str += i.repeat(q);
+  }
+
+  if (!str) {
+    throw { error: "Invalid input" };
   }
 
   return str;
