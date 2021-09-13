@@ -34,7 +34,10 @@ function romanToArabic(roman) {
     value = 0,
     prev = 0;
 
-  if (/IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman))
+  if (
+    /[IVXL][M]|[IVX][D]|[IV][C]|[I][L]/.test(roman) ||
+    /IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman)
+  )
     return {
       error: `Input value was not a roman number ${roman}`,
     };
