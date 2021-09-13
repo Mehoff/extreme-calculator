@@ -19,7 +19,7 @@
             <div class="card-body">
                 <div class="row m-5">
                     <div class="col">
-                        <input type="text" class="form-control" id="firstNumber" aria-describedby="firstNumberError" required onchange="handleCalculate()">
+                        <input type="text" class="form-control" id="firstNumber" aria-describedby="firstNumberError" required oninput="handleCalculate()">
                         <div id="firstNumberError" class="invalid-feedback" style="display: none;">
                           Please provide a valid number
                         </div>
@@ -28,7 +28,7 @@
                         +
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" id="secondNumber" aria-describedby="secondNumberError" required onchange="handleCalculate()">
+                        <input type="text" class="form-control" id="secondNumber" aria-describedby="secondNumberError" required oninput="handleCalculate()">
                         <div id="secondNumberError" class="invalid-feedback" style="display: none;">
                           Please provide a valid number
                         </div>
@@ -37,15 +37,11 @@
                         = <span id="resultValue"></span>
                     </div>
                 </div>
-                <!-- <div class="row text-center m-5">
-                    <div class="col">
-                        <button id="calculateButton" class="btn btn-primary w-100" onclick="handleCalculate()">Calculate</button>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
 
+    <script src="calculator.js"></script>
     <script src="index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
