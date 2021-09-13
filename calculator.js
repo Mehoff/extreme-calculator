@@ -1,23 +1,24 @@
 function sum(a, b) {
-  if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
-    return { error: "Invalid input" };
+  let bigA, bigB;
 
-  if (isNaN(a) && isNaN(b)) {
-    // Roman, so answer also in Roman
+  try {
+    // Передано два числа
+    bigA = BigInt(a);
+    bigB = BigInt(b);
+    return { answer: bigA + bigB };
+  } catch (err) {
+    // Один или два текстовых значенияж
+    if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
+      return { error: "Both number should be similar type" };
 
-    console.log(a);
+    if (isNaN(a) && isNaN(b)) {
+      // Roman, so answer also in Roman
+      a = romanToArabic(a);
+      b = romanToArabic(b);
 
-    console.log(b);
-
-    a = romanToArabic(a);
-    b = romanToArabic(b);
-
-    console.log("a", a);
-    console.log("b", b);
-
-    return { answer: arabicToRoman(a + b) };
+      return { answer: arabicToRoman(a + b) };
+    }
   }
-  return { answer: a + b };
 }
 
 function romanToArabic(roman) {
