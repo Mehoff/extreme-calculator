@@ -24,11 +24,17 @@ function hideValidationError(errorBlockName, errorInputName) {
 }
 
 function handleCalculate() {
-    showValidationErrorWithMessage('firstNumberError', 'firstNumber', 'What is it');
-    showValidationErrorWithMessage('secondNumberError', 'secondNumber', 'What is it');
+    let result = sum(firstNumber.value, secondNumber.value);
 
-    // hideValidationError('firstNumberError', 'firstNumber');
-    // hideValidationError('secondNumberError', 'secondNumber');
+    if (result.error) {
+        showValidationErrorWithMessage('firstNumberError', 'firstNumber', result.error);
+        showValidationErrorWithMessage('secondNumberError', 'secondNumber', result.error);
 
-    resultValue.innerText = firstNumber.value + secondNumber.value;
+        resultValue.innerText = '';
+    } else {
+        hideValidationError('firstNumberError', 'firstNumber');
+        hideValidationError('secondNumberError', 'secondNumber');
+
+        resultValue.innerText = result.answer;
+    }
 }
