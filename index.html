@@ -15,20 +15,26 @@
 <body>
     <div class="container">
         <div class="card text-dark bg-white my-3" id="calculator_container">
-            <div class="card-header">Extreme calculator</div>
+            <div class="card-header text-center">Extreme calculator</div>
             <div class="card-body">
                 <div class="row m-5">
                     <div class="col">
-                        <input class="form-control" type="text">
+                        <input type="text" class="form-control" id="firstNumber" aria-describedby="firstNumberError" required oninput="handleCalculate()">
+                        <div id="firstNumberError" class="invalid-feedback" style="display: none;">
+                          Please provide a valid number
+                        </div>
                     </div>
                     <div class="col-auto operation-type-symbol">
                         +
                     </div>
                     <div class="col">
-                        <input class="form-control" type="text">
+                        <input type="text" class="form-control" id="secondNumber" aria-describedby="secondNumberError" required oninput="handleCalculate()">
+                        <div id="secondNumberError" class="invalid-feedback" style="display: none;">
+                          Please provide a valid number
+                        </div>
                     </div>
-                    <div class="col">
-                        <button class="btn btn-primary mb-3">Calculate</button>
+                    <div class="col-auto operation-type-symbol">
+                        = <span id="resultValue"></span>
                     </div>
                 </div>
             </div>
