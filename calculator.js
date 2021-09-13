@@ -96,6 +96,4 @@ function arabicToRoman(arabic) {
   return str;
 }
 
-console.log("SUM: ", sum(5, 5));
-
 module.exports = { sum };
