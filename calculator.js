@@ -13,10 +13,15 @@ function sum(a, b) {
 
     if (isNaN(a) && isNaN(b)) {
       // Roman, so answer also in Roman
+      a = a.toUpperCase();
+      b = b.toUpperCase();
       a = romanToArabic(a);
       b = romanToArabic(b);
 
-      return { answer: arabicToRoman(a + b) };
+      const answer = arabicToRoman(a + b);
+      if (!answer) return { error: "Failed to calculate" };
+
+      return { answer };
     }
   }
 }
@@ -29,7 +34,10 @@ function romanToArabic(roman) {
     value = 0,
     prev = 0;
 
-  if (/IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman))
+  if (
+    /[IVXL][M]|[IVX][D]|[IV][C]|[I][L]/.test(roman) ||
+    /IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman)
+  )
     return {
       error: `Input value was not a roman number ${roman}`,
     };
