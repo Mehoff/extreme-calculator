@@ -2,38 +2,48 @@ let resultValue = document.getElementById('resultValue');
 let firstNumber = document.getElementById('firstNumber');
 let secondNumber = document.getElementById('secondNumber');
 
-function showValidationErrorWithMessage(errorBlockName, errorInputName, msg = 'Error') {
-    let errorBlock = document.getElementById(errorBlockName);
-    errorBlock.style.display = 'block';
-    errorBlock.innerText = msg;
-
+function showValidationError(errorInputName) {
     let errorInput = document.getElementById(errorInputName);
     let classList = errorInput.classList;
     classList.add('is-invalid');
     errorInput.classList = classList;
 }
 
-function hideValidationError(errorBlockName, errorInputName) {
-    let error = document.getElementById(errorBlockName);
-    error.style.display = 'none';
-
+function hideValidationError(errorInputName) {
     let errorInput = document.getElementById(errorInputName);
     let classList = errorInput.classList;
     classList.remove('is-invalid');
     errorInput.classList = classList;
 }
 
+function showValidationErrorMessage(errorBlockName, msg = '') {
+    let errorBlock = document.getElementById(errorBlockName);
+    errorBlock.style.display = 'block';
+    errorBlock.innerText = msg;
+}
+
+function hideValidationErrorMessage(errorBlockName) {
+    let error = document.getElementById(errorBlockName);
+    error.style.display = 'none';
+}
+
 function handleCalculate() {
+    if (!firstNumber.value.length || !secondNumber.value.length) {
+        return;
+    }
+
     let result = sum(firstNumber.value, secondNumber.value);
 
     if (result.error) {
-        showValidationErrorWithMessage('firstNumberError', 'firstNumber', result.error);
-        showValidationErrorWithMessage('secondNumberError', 'secondNumber', result.error);
+        showValidationError('firstNumber');
+        showValidationError('secondNumber');
+        showValidationErrorMessage('errorMessage', result.error);
 
         resultValue.innerText = '';
     } else {
         hideValidationError('firstNumberError', 'firstNumber');
         hideValidationError('secondNumberError', 'secondNumber');
+        hideValidationErrorMessage('errorMessage');
 
         resultValue.innerText = result.answer;
     }

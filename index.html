@@ -17,7 +17,7 @@
         <div class="card text-dark bg-white my-3" id="calculator_container">
             <div class="card-header text-center">Extreme calculator</div>
             <div class="card-body">
-                <div class="row m-5">
+                <div class="row m-5 mb-0">
                     <div class="col">
                         <input type="text" class="form-control" id="firstNumber" aria-describedby="firstNumberError" required oninput="handleCalculate()">
                         <div id="firstNumberError" class="invalid-feedback" style="display: none;">
@@ -36,6 +36,9 @@
                     <div class="col-auto operation-type-symbol">
                         = <span id="resultValue"></span>
                     </div>
+                </div>
+                <div class="row m-5 mt-3">
+                    <p class="text-danger" id="errorMessage" style="display: none;">Error text</p>
                 </div>
             </div>
         </div>
