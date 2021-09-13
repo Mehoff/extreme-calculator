@@ -29,6 +29,10 @@ function hideValidationErrorMessage(errorBlockName) {
 
 function handleCalculate() {
     if (!firstNumber.value.length || !secondNumber.value.length) {
+        hideValidationError('firstNumber');
+        hideValidationError('secondNumber');
+        hideValidationErrorMessage('errorMessage');
+
         return;
     }
 
