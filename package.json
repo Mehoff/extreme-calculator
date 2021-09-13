@@ -1,0 +1,22 @@
+{
+  "name": "extreme-calculator",
+  "version": "1.0.0",
+  "description": "Matvey is watching you!",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mehoff/extreme-calculator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mehoff/extreme-calculator/issues"
+  },
+  "homepage": "https://github.com/Mehoff/extreme-calculator#readme",
+  "devDependencies": {
+    "jest": "^27.1.1"
+  }
+}
