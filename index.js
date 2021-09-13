@@ -30,5 +30,5 @@ function handleCalculate() {
     // hideValidationError('firstNumberError', 'firstNumber');
     // hideValidationError('secondNumberError', 'secondNumber');
 
-    resultValue.innerText = firstNumber + secondNumber;
+    resultValue.innerText = firstNumber.value + secondNumber.value;
 }
