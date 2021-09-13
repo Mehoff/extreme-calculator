@@ -27,8 +27,13 @@ describe("Calculator functions", () => {
       error: "Both numbers should be similar type",
     });
   });
-  test("throw error when we pass Y + X", () => {
+  test("return error when we pass Y + X", () => {
     expect(sum("Y", "X")).toEqual({
+      error: "Invalid input",
+    });
+  });
+  test("return error when we pass XY + X", () => {
+    expect(sum("XY", "X")).toEqual({
       error: "Invalid input",
     });
   });
@@ -36,5 +41,17 @@ describe("Calculator functions", () => {
     expect(sum("Y", "11")).toEqual({
       error: "Both numbers should be similar type",
     });
+  });
+  test("adds 2.5 and 3", () => {
+    expect(sum("2.5", "3")).toEqual({ answer: "5.5" });
+  });
+  test("adds 2.5 and 3", () => {
+    expect(sum("2.5", "3")).toEqual({ answer: "5.5" });
+  });
+  test("adds 3 and 3.5", () => {
+    expect(sum("3.5", "3")).toEqual({ answer: "6.5" });
+  });
+  test("adds 3.5 and 3.5", () => {
+    expect(sum("3.5", "3.5")).toEqual({ answer: "7.0" });
   });
 });

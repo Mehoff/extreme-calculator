@@ -66,7 +66,7 @@ function sum(a, b) {
   if (areNumeric(a, b)) {
     // First, we check if they are floats
     if (areDouble(a, b)) {
-      return { answer: parseFloat(a) + parseFloat(b) };
+      return { answer: (parseFloat(a) + parseFloat(b)).toFixed(1) };
     } else {
       // If inputs are not floats, then we create BigInts
       let bigA, bigB;
