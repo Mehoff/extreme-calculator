@@ -41,8 +41,8 @@ function handleCalculate() {
 
         resultValue.innerText = '';
     } else {
-        hideValidationError('firstNumberError', 'firstNumber');
-        hideValidationError('secondNumberError', 'secondNumber');
+        hideValidationError('firstNumber');
+        hideValidationError('secondNumber');
         hideValidationErrorMessage('errorMessage');
 
         resultValue.innerText = result.answer;
