@@ -2,20 +2,33 @@ let resultValue = document.getElementById('resultValue');
 let firstNumber = document.getElementById('firstNumber');
 let secondNumber = document.getElementById('secondNumber');
 
-function showValidationErrorWithMessage(errorBlockName, msg = 'Error') {
-    let error = document.getElementById(errorBlockName);
-    error.style.display = 'block';
-    error.innerText = msg;
+function showValidationErrorWithMessage(errorBlockName, errorInputName, msg = 'Error') {
+    let errorBlock = document.getElementById(errorBlockName);
+    errorBlock.style.display = 'block';
+    errorBlock.innerText = msg;
+
+    let errorInput = document.getElementById(errorInputName);
+    let classList = errorInput.classList;
+    classList.add('is-invalid');
+    errorInput.classList = classList;
 }
 
-function hideValidationError(errorBlockName) {
+function hideValidationError(errorBlockName, errorInputName) {
     let error = document.getElementById(errorBlockName);
     error.style.display = 'none';
+
+    let errorInput = document.getElementById(errorInputName);
+    let classList = errorInput.classList;
+    classList.remove('is-invalid');
+    errorInput.classList = classList;
 }
 
 function handleCalculate() {
-    showValidationErrorWithMessage('firstNumberError', 'What is it');
-    showValidationErrorWithMessage('secondNumberError', 'What is it');
+    showValidationErrorWithMessage('firstNumberError', 'firstNumber', 'What is it');
+    showValidationErrorWithMessage('secondNumberError', 'secondNumber', 'What is it');
 
-    resultValue.innerText = sum(firstNumber, secondNumber);
+    // hideValidationError('firstNumberError', 'firstNumber');
+    // hideValidationError('secondNumberError', 'secondNumber');
+
+    resultValue.innerText = firstNumber + secondNumber;
 }
