@@ -7,7 +7,7 @@ function sum(a, b) {
     bigB = BigInt(b);
     return { answer: bigA + bigB };
   } catch (err) {
-    // Один или два текстовых значенияж
+    // Один или два текстовых значениях
     if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
       return { error: "Both number should be similar type" };
 
@@ -39,21 +39,29 @@ function romanToArabic(roman) {
     /IIII|XXXX|CCCC|MMMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman)
   )
     return {
-      error: `Input value was not a roman number ${roman}`,
+      error: `Input value was not a roman number`,
     };
 
-  for (var i = 0; i < roman.length; i++) {
-    var current = char_to_int(roman.charAt(i));
-    if (current > prev) {
-      totalValue -= 2 * value;
+  try {
+    for (var i = 0; i < roman.length; i++) {
+      var current = char_to_int(roman.charAt(i));
+      if (current === -1) {
+        throw { error: "Invalid romanian number" };
+      }
+      if (current > prev) {
+        totalValue -= 2 * value;
+      }
+      if (current !== prev) {
+        value = 0;
+      }
+      value += current;
+      totalValue += current;
+      prev = current;
     }
-    if (current !== prev) {
-      value = 0;
-    }
-    value += current;
-    totalValue += current;
-    prev = current;
+  } catch (err) {
+    return err;
   }
+
   return totalValue;
 }
 
