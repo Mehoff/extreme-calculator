@@ -1,36 +1,28 @@
 function sum(a, b) {
-  let result;
-  let isAnswerInRoman = false;
+  if ((isNaN(a) && !isNaN(b)) || (!isNaN(a) && isNaN(b)))
+    return { error: "Invalid input" };
 
-  if (!a || !b) return { error: "Invalid input" };
+  if (isNaN(a) && isNaN(b)) {
+    // Roman, so answer also in Roman
 
-  if (isNaN(a) || isNaN(b)) {
-    // One of inputs is not a number, so it can be roman
-    isAnswerInRoman = true;
-    const arabicA = romanToArabic(a);
-    const arabicB = romanToArabic(b);
+    console.log(a);
 
-    if (arabicA.error || arabicB.error) {
-      return {
-        error: "Invalid input",
-      };
-    }
+    console.log(b);
 
-    result = arabicA + arabicB;
+    a = romanToArabic(a);
+    b = romanToArabic(b);
+
+    console.log("a", a);
+    console.log("b", b);
+
+    return { answer: arabicToRoman(a + b) };
   }
-
-  if (isAnswerInRoman) {
-    // Convert answer to roman before return
-    result = arabicToRoman(result);
-  }
-
-  return {
-    answer: result,
-  };
+  return { answer: a + b };
 }
 
 function romanToArabic(roman) {
-  if (roman == null || !isNaN(roman)) return { error: "Invalid input" };
+  if (roman == null || !isNaN(roman))
+    return { error: `Invalid input (roman (${roman}) is null or a number)` };
 
   var totalValue = 0,
     value = 0,
@@ -38,7 +30,7 @@ function romanToArabic(roman) {
 
   if (/IIII|XXX|CCC|MMM|VV|LL|DD|[^IVXLCDM]|II[LCDMXV]/.test(roman))
     return {
-      error: "Input value was not a roman number",
+      error: `Input value was not a roman number ${roman}`,
     };
 
   for (var i = 0; i < roman.length; i++) {
@@ -76,3 +68,34 @@ function char_to_int(character) {
       return -1;
   }
 }
+
+function arabicToRoman(arabic) {
+  var roman = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+  var str = "";
+
+  for (var i of Object.keys(roman)) {
+    var q = Math.floor(arabic / roman[i]);
+    arabic -= q * roman[i];
+    str += i.repeat(q);
+  }
+
+  return str;
+}
+
+console.log("SUM: ", sum(5, 5));
+
+module.exports = { sum };
